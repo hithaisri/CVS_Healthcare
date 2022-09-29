@@ -6,4 +6,6 @@ import com.member.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Integer>{
 
+	Member findByEmail(String email);
+
 }

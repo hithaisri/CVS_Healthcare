@@ -26,10 +26,20 @@ public class MemberController {
 	MemberService memberService;
 	
 	@PostMapping("/save")
-	public Integer saveMember(@RequestBody Member member) {
-		Integer id=memberService.saveMember(member);
-		System.out.println("Id"+id);
-		return id;
+	public ResponseEntity<String> saveMember(@RequestBody Member member) {
+		ResponseEntity<String> responseEntity=null;
+		try {
+			Integer id=memberService.saveMember(member);
+			if(id!=null && id>0)
+				responseEntity=new ResponseEntity<>("Successfully Added Member with Id-"+id,HttpStatus.OK);
+			else
+				responseEntity=new ResponseEntity<>("Failed to Add Member. Please Register the Member!",HttpStatus.OK);
+
+		}catch(Exception e) {
+			e.printStackTrace();
+			responseEntity=new ResponseEntity<>("Failed to Save Member!",HttpStatus.BAD_REQUEST);
+		}
+		return responseEntity;
 	}
 	
 	@GetMapping("/getMembers")
