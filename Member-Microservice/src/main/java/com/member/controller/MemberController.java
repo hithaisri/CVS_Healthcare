@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.member.entity.Member;
+import com.member.entity.Physician;
 import com.member.service.MemberService;
 
 @RestController
@@ -78,5 +80,23 @@ public class MemberController {
 	@PutMapping("/updateMember/{id}")
 	public ResponseEntity<Member> updateEmployee(@RequestBody Member member,@PathVariable Integer id) {
 		return new	ResponseEntity<Member>(memberService.updateMember(member, id),HttpStatus.OK);
+	}
+	
+	@GetMapping("/getPhysicians")
+	public List<Physician> getPhysicians(){
+		List<Physician> physicians=null;
+		try {
+			physicians=memberService.getPhysicians();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return physicians;
+		
+	}
+	
+	@GetMapping("/search")
+	public List<Member> searchBooks(@RequestParam(required=false) String firstName,@RequestParam(required=false) String lastName,@RequestParam(required=false) Integer claimId,@RequestParam(required=false) String physicianName,@RequestParam(required=false) Integer memberId) {
+		return memberService.searchMember(firstName,lastName,claimId,physicianName,memberId);
 	}
 }

@@ -27,6 +27,8 @@ public class Member {
 	private String email;
 	
 	private String city;
+	
+	private Integer phyiscianId;
 
 	public Integer getId() {
 		return id;
@@ -94,8 +96,17 @@ public class Member {
 	}
 
 	
+	public Integer getPhyiscianId() {
+		return phyiscianId;
+	}
+
+	public void setPhyiscianId(Integer phyiscianId) {
+		this.phyiscianId = phyiscianId;
+	}
+
+
 	public Member(Integer id, String firstName, String lastName, Date dob, String address, String state, String email,
-			String password, String city) {
+			String city, Integer phyiscianId) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -105,10 +116,12 @@ public class Member {
 		this.state = state;
 		this.email = email;
 		this.city = city;
+		this.phyiscianId = phyiscianId;
 	}
 
 	public Member() {
 		super();
 	}
+	
 	
 }

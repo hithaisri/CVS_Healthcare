@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.member.entity.Member;
+import com.member.entity.Physician;
 
 public interface MemberService {
 
@@ -18,5 +19,10 @@ public interface MemberService {
 	void deleteAllMembers();
 
 	Member updateMember(Member member, Integer id);
+
+	List<Physician> getPhysicians();
+
+	List<Member> searchMember(String firstName, String lastName, Integer claimId, String physicianName,
+			Integer memberId);
 
 }

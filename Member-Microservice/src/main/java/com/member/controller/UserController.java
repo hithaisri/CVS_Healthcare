@@ -1,5 +1,6 @@
 package com.member.controller;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.member.entity.AuthResponse;
 import com.member.entity.LoginRequest;
 import com.member.entity.User;
+import com.member.exception.ResourceNotFoundException;
 import com.member.service.UserService;
 
 @RestController
@@ -28,10 +30,20 @@ public class UserController {
 	
 	@PostMapping("/save")
 	public ResponseEntity<String> saveUser(@RequestBody User user) {
+		ResponseEntity<String> responseEntity=null;
+		try {
+			if(StringUtils.isNotBlank(user.getUserEmail()) && StringUtils.isNotBlank(user.getPassword())) {
 		User savedUser=userService.saveUser(user);
 		if(savedUser!=null)
-			return new ResponseEntity<String>("Successfully added User!",HttpStatus.OK);
+			responseEntity= new ResponseEntity<String>("Successfully added User!",HttpStatus.OK);
 		else 
-			return new ResponseEntity<String>("Failed to save User!",HttpStatus.BAD_REQUEST);
+			responseEntity= new ResponseEntity<String>("Failed to save User!",HttpStatus.BAD_REQUEST);
+			}
+			else 
+				throw new ResourceNotFoundException("Please fill the mandatory fields!");
+		}catch(ResourceNotFoundException e) {
+			responseEntity= new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}
+		return responseEntity;
 	}
 }
