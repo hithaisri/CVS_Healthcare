@@ -4,6 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import com.member.service.UserService;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
 	@Autowired
@@ -33,11 +35,11 @@ public class UserController {
 		ResponseEntity<String> responseEntity=null;
 		try {
 			if(StringUtils.isNotBlank(user.getUserEmail()) && StringUtils.isNotBlank(user.getPassword())) {
-		User savedUser=userService.saveUser(user);
-		if(savedUser!=null)
-			responseEntity= new ResponseEntity<String>("Successfully added User!",HttpStatus.OK);
-		else 
-			responseEntity= new ResponseEntity<String>("Failed to save User!",HttpStatus.BAD_REQUEST);
+				User savedUser=userService.saveUser(user);
+				if(savedUser!=null)
+					responseEntity= new ResponseEntity<String>("Successfully added User!",HttpStatus.OK);
+				else 
+					responseEntity= new ResponseEntity<String>("Failed to save User!",HttpStatus.BAD_REQUEST);
 			}
 			else 
 				throw new ResourceNotFoundException("Please fill the mandatory fields!");

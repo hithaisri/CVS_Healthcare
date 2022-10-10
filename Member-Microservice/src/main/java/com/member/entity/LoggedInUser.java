@@ -5,6 +5,8 @@ public class LoggedInUser {
         private Integer userId;
 		
 		private String email;
+		
+		private Integer memberId;
 
 		public Integer getUserId() {
 			return userId;
@@ -22,4 +24,14 @@ public class LoggedInUser {
 		public void setEmail(String email) {
 			this.email = email;
 		}
+
+		public Integer getMemberId() {
+			return memberId;
+		}
+
+		public void setMemberId(Integer memberId) {
+			this.memberId = memberId;
+		}
+		
+		
 }

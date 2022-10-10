@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService{
 			response.setRole(existingUser.getRole());
 			response.setStatusCode(200);
 			LoggedInUser loggedInUser=new LoggedInUser();
+			loggedInUser.setMemberId(existingUser.getMemberId());
 			loggedInUser.setEmail(existingUser.getUserEmail());
 			loggedInUser.setUserId(existingUser.getUserId());
 			response.setUser(loggedInUser);
