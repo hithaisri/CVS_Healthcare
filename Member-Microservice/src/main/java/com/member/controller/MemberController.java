@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.member.entity.Member;
+import com.member.entity.MemberVO;
 import com.member.entity.Physician;
 import com.member.service.MemberService;
 
@@ -98,7 +99,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/search")
-	public List<Member> searchBooks(@RequestParam(required=false) String firstName,@RequestParam(required=false) String lastName,@RequestParam(required=false) Integer claimId,@RequestParam(required=false) String physicianName,@RequestParam(required=false) Integer memberId) {
+	public List<MemberVO> searchBooks(@RequestParam(required=false) String firstName,@RequestParam(required=false) String lastName,@RequestParam(required=false) Integer claimId,@RequestParam(required=false) String physicianName,@RequestParam(required=false) Integer memberId) {
 		return memberService.searchMember(firstName,lastName,claimId,physicianName,memberId);
 	}
 }

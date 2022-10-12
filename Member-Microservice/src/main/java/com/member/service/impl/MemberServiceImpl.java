@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.member.entity.Member;
+import com.member.entity.MemberVO;
 import com.member.entity.Physician;
 import com.member.entity.User;
 import com.member.exception.ResourceNotFoundException;
@@ -107,9 +108,10 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public List<Member> searchMember(String firstName, String lastName, Integer claimId, String physicianName,
+	public List<MemberVO> searchMember(String firstName, String lastName, Integer claimId, String physicianName,
 			Integer memberId) {
 		List<Member> members=null;
+		List<MemberVO> membersVO=null;
 		Optional<Member> mem=null;
 
 		if(StringUtils.isNotBlank(firstName) && StringUtils.isNotBlank(lastName))
@@ -131,7 +133,31 @@ public class MemberServiceImpl implements MemberService{
 		else if(StringUtils.isNotBlank(physicianName))
 			members=memberRepository.getMemberByPhysician(physicianName);
 
-		return members;
+		if(members!=null && members.size()>0)
+		{
+			membersVO=new ArrayList<MemberVO>();
+			for(Member m: members)
+			{
+				MemberVO vo=toVO(m);
+				membersVO.add(vo);
+			}
+		}
+		return membersVO;
+	}
+
+	private MemberVO toVO(Member m) {
+
+     MemberVO memberVO=new MemberVO();
+     memberVO.setId(m.getId());
+     memberVO.setFirstName(m.getFirstName());
+     memberVO.setLastName(m.getLastName());
+     memberVO.setEmail(m.getEmail());
+     memberVO.setAddress(m.getAddress());
+     memberVO.setState(m.getState());
+     memberVO.setCity(m.getCity());
+     memberVO.setPhysicianName(physicianRepository.getPhysicianNameById(m.getPhyiscianId()));
+     memberVO.setDob(m.getDob());
+		return memberVO;
 	}
 
 }
